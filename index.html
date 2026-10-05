@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Visor de algoritmos Rubik</title>
+<link rel="stylesheet" href="css/style.css"></head><body><main>
+<h1>🧊 Visor de algoritmos <button class="b" id="th" style="float:right" title="Cambiar entre modo claro y oscuro">🌓</button></h1>
+<p class="sub">Pinta solo los stickers que te interesan (el resto queda gris), escribe un algoritmo (acepta paréntesis y repeticiones, como (R U R' U')3) y míralo moverse. Arrastra para girar la vista. Atajos en PC (fuera del cuadro de texto): Espacio ▶/⏸, ← → paso, R reinicia. Toca un movimiento para saltar a él.</p>
+
+<div class="workspace">
+  <div class="workspace-left">
+    <div class="card" id="stage"><div id="scene"></div><button class="b" id="tl" type="button" aria-pressed="false" title="Actívalo para inclinar el cubo con el dedo; desactívalo para desplazar la página">↕ Inclinar</button></div>
+    <div class="card">
+      <label>Color del pincel · toca un sticker para pintarlo</label>
+      <div class="row pal" id="pal"></div>
+      <div class="row" style="margin-top:10px">
+        <span style="font-size:12px;color:var(--mu)">Plantillas:</span>
+        <button class="b" data-pre="top">Solo capa superior</button>
+        <button class="b" data-pre="f2l">Dos capas (F2L)</button>
+        <button class="b" data-pre="par">Solo el par</button>
+        <button class="b" data-pre="solved">Resuelto</button>
+        <button class="b" data-pre="gray">Todo gris</button>
+        <button class="b" id="wh" title="Con el cubo resuelto en pantalla, pinta (o deja pintada) solo la esquina y la arista del par donde estén en tu cubo, y pulsa aquí">🔍 ¿Qué caso F2L es?</button>
+        <button class="b" id="wl" title="Pinta la capa superior como la ves en tu cubo y pulsa aquí">🔍 ¿Qué OLL/PLL es?</button>
+      </div>
+      <div class="hint">Arrastra el cubo para girarlo. Toca un sticker para pintarlo.</div>
+    </div>
+  </div>
+
+  <div class="workspace-right">
+    <div class="card">
+      <div class="section-head"><label>Algoritmo actual</label><span class="move-count" id="mc">0 movimientos</span></div>
+      <div class="casehead"><span class="th big" id="bigth"></span><div style="min-width:0;flex:1"><div class="case-name" id="caseName">Algoritmo personalizado</div><div class="row" id="vrow"></div></div></div>
+      <textarea id="alg" rows="2" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="Escribe un algoritmo: R U R' U' o (R U R' U')3">R U R' U' R' F R2 U' R' U' R U R' F'</textarea>
+      <div id="err"></div>
+      <div class="kp" id="kp"></div>
+      <div class="row">
+        <button class="b" data-ex="R U R' U' R' F R2 U' R' U' R U R' F'">T-perm</button>
+        <button class="b" data-ex="R U R' U R U2 R'">Sune</button>
+        <button class="b" data-ex="R U R' U'">Sexy move</button>
+        <button class="b" id="inv">Invertir</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="b" id="fv">★ Favorito</button><button class="b" id="dn">✓ Aprendido</button><button class="b" id="mi">↔ Espejo</button><button class="b" id="del" style="display:none">🗑 Borrar caso</button>
+        <label style="margin:0"><input type="checkbox" id="cs" checked> Empezar en el caso</label>
+      </div>
+      <div class="row" style="margin-top:8px"><input type="text" id="nm" placeholder="Nombre (ej. F2L 3)" style="flex:1"><select id="cg" title="Categoría"></select></div>
+      <div class="row" style="margin-top:6px"><button class="b" id="sv">💾 Guardar en categoría</button><button class="b" id="mv" style="display:none">↪ Mover a categoría</button></div>
+      <details><summary>Importar una lista de algoritmos (pegar de una página)</summary>
+        <div class="hint" style="margin:6px 0">Un caso por línea, como «Nombre: movimientos». Sin nombre, se numeran solos.</div>
+        <textarea id="bulk" rows="5" placeholder="F2L 1: U R U' R'&#10;F2L 2: y' U' R' U R&#10;(R U R' U')"></textarea>
+        <div class="row" style="margin-top:6px"><input type="text" id="grp" placeholder="Grupo (ej. F2L web)" style="flex:1"><button class="b" id="bi">Importar lista</button></div></details>
+      <details><summary>Exportar / importar mis datos</summary><textarea id="io" rows="3"></textarea><div class="row"><button class="b" id="ex">Exportar</button><button class="b" id="im">Importar</button><button class="b" id="exf">⬇ Descargar archivo</button><label class="b" style="cursor:pointer;margin:0">⬆ Cargar archivo<input type="file" id="imf" accept=".json" hidden></label></div></details>
+      <div id="chips" aria-label="Movimientos del algoritmo"></div>
+      <div class="playbar">
+        <button class="b" id="rs" title="Reiniciar">⏮</button><button class="b" id="bk" title="Movimiento anterior">◀</button>
+        <button class="b p" id="pb" title="Reproducir">▶</button><button class="b" id="fw" title="Siguiente movimiento">▶|</button>
+        <div class="grow"></div>
+        <label>Velocidad <input type="range" id="spd" min="150" max="900" value="500" dir="rtl"></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card catalog">
+  <div class="section-head"><label>Catálogo · elige un algoritmo para cargarlo en el visor</label><span class="move-count" id="cnt"></span></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="row" style="margin-bottom:8px"><input type="text" id="cat" placeholder="Nueva categoría…" style="flex:1"><button class="b" id="ca">＋ Crear</button><button class="b" id="cd" style="display:none">🗑 Borrar categoría</button><button class="b" id="cr" style="display:none">↺ Restaurar</button></div>
+  <div class="row" style="margin-bottom:8px"><input type="text" id="q" placeholder="Buscar por nombre o movimientos…" style="flex:1"><button class="b" id="rnd">🎲 Al azar</button><button class="b" id="pr">🖨 Imprimir hoja</button></div>
+  <div class="row" style="margin-bottom:8px"><select id="so"><option value="">Orden original</option><option value="n">Más cortos primero</option><option value="l">Más largos primero</option></select><label style="margin:0"><input type="checkbox" id="fr"> Solo R y U</label><label style="margin:0"><input type="checkbox" id="fx"> Sin rotaciones ni M/E/S</label></div>
+  <div id="lst"></div>
+  <button class="b" id="solvb" style="margin-top:10px;width:100%">🧩 Resolver un cubo completo (CFOP)</button>
+</div>
+</main><div class="card" id="solv" hidden style="margin:14px 10px"><h3 style="margin:0 0 4px;font-size:15px">🧩 Resolver un cubo completo · paso 1: pintar y validar</h3>
+<div class="hint">Sostén tu cubo con amarillo arriba y verde al frente. Pinta cada cara como en el cubo desplegado: arriba U, en medio L F R B, abajo D. Los centros ya están puestos.</div>
+<div id="snpal"></div><div id="net" class="net"></div>
+<div class="row"><button class="b" id="nres">Resuelto</button><button class="b" id="nmez">🎲 Mezcla al azar</button><button class="b" id="nvac">Vaciar</button><button class="b" id="nval">✔ Validar cubo</button><button class="b" id="n3d">👁 Ver en el cubo 3D</button><button class="b" id="nplay">▶ Reproducir la mezcla</button></div>
+<div id="vmsg" class="hint" style="margin-top:8px"></div></div><details class="card" id="guide" style="margin:14px 10px"><summary style="cursor:pointer;font-weight:600">📖 Guía de movimientos (toca un ejemplo para verlo en el cubo)</summary><div id="gbody"></div></details><div id="sheet"></div>
+<script src="data/cfop-pll.js"></script>
+<script src="data/cfop-f2l.js"></script>
+<script src="data/cfop-oll.js"></script>
+<script src="data/basicos.js"></script>
+<script src="data/library.js"></script>
+<script src="js/app.js"></script></body></html>
