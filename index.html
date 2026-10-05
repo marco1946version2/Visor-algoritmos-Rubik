@@ -70,14 +70,33 @@
   <div id="lst"></div>
   <button class="b" id="solvb" style="margin-top:10px;width:100%">🧩 Resolver un cubo completo (CFOP)</button>
 </div>
-</main><div class="card" id="solv" hidden style="margin:14px 10px"><h3 style="margin:0 0 4px;font-size:15px">🧩 Resolver un cubo completo · paso 1: pintar y validar</h3>
-<div class="hint">Sostén tu cubo con amarillo arriba y verde al frente. Pinta cada cara como en el cubo desplegado: arriba U, en medio L F R B, abajo D. Los centros ya están puestos.</div>
+<div class="card" id="solv" hidden><h3 style="margin:0 0 4px;font-size:15px">🧩 Resolver un cubo completo (CFOP)</h3>
+<div class="hint"><b>Paso 1.</b> Sostén tu cubo con amarillo arriba y verde al frente. Pinta cada cara como en el cubo desplegado: arriba U, en medio L F R B, abajo D. Los centros ya están puestos.</div>
 <div id="snpal"></div><div id="net" class="net"></div>
 <div class="row"><button class="b" id="nres">Resuelto</button><button class="b" id="nmez">🎲 Mezcla al azar</button><button class="b" id="nvac">Vaciar</button><button class="b" id="nval">✔ Validar cubo</button><button class="b" id="n3d">👁 Ver en el cubo 3D</button><button class="b" id="nplay">▶ Reproducir la mezcla</button></div>
-<div id="vmsg" class="hint" style="margin-top:8px"></div></div><details class="card" id="guide" style="margin:14px 10px"><summary style="cursor:pointer;font-weight:600">📖 Guía de movimientos (toca un ejemplo para verlo en el cubo)</summary><div id="gbody"></div></details><div id="sheet"></div>
+<div class="row" style="margin-top:8px"><input type="text" id="nscr" placeholder="O escribe una mezcla (solo R L U D F B), ej. R U F' D2" style="flex:1" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="b" id="nscrb">Aplicar mezcla</button></div>
+<div id="vmsg" class="hint" style="margin-top:8px"></div>
+<div class="row" style="margin-top:10px"><button class="b p" id="nsolve">🧠 Resolver (cruz → F2L → OLL → PLL)</button><button class="b" id="nshow" hidden>▶ Ver todo en el cubo 3D</button><button class="b" id="ncopy" hidden>📋 Copiar</button></div>
+<div id="solsum"></div><div id="solres"></div></div><details class="card" id="guide"><summary style="cursor:pointer;font-weight:600">📖 Guía de movimientos (toca un ejemplo para verlo en el cubo)</summary><div id="gbody"></div></details></main><div id="sheet"></div>
 <script src="data/cfop-pll.js"></script>
 <script src="data/cfop-f2l.js"></script>
 <script src="data/cfop-oll.js"></script>
 <script src="data/basicos.js"></script>
 <script src="data/library.js"></script>
+<script src="js/core/cubo-base.js"></script>
+<script src="js/core/visor3d.js"></script>
+<script src="js/core/parser.js"></script>
+<script src="js/core/reproductor.js"></script>
+<script src="js/ui/vista3d.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui/miniaturas.js"></script>
+<script src="js/ui/catalogo.js"></script>
+<script src="js/ui/mis-casos.js"></script>
+<script src="js/ui/teclado.js"></script>
+<script src="js/ui/extras.js"></script>
+<script src="js/ui/identificar.js"></script>
+<script src="js/ui/resolver.js"></script>
+<script src="js/methods/cfop.js"></script>
+<script src="js/ui/solucion.js"></script>
+<script src="js/ui/guia.js"></script>
 <script src="js/app.js"></script></body></html>

@@ -19,7 +19,7 @@ const LIB_PLL=[
   "T|R U R' U' R' F R2 U' R' U' R U R' F'",
   "Ua|M2 U M U2 M' U M2",
   "Ub|M2 U' M U2 M' U' M2",
-  "V|R' U R' d' R' F' R2 U' R' U R' F R F",
+  "V|R' U R' U' B' R' B2 U' B' U B' R B R",
   "Y|F R U' R' U' R U R' F' R U R' U' R' F R F'",
   "Z|M' U M2 U M2 U M' U2 M2"
 ];

@@ -47,5 +47,11 @@ button.b{border-radius:10px;transition:transform .08s,border-color .15s}button.b
 .ns{border-radius:4px;border:1px solid #0007;cursor:pointer}.ns.ct{cursor:default;outline:2px solid #fff8;outline-offset:-3px}
 #snpal{display:flex;gap:6px;margin:8px 0}#snpal button{width:30px;height:30px;border-radius:6px;border:1px solid #0007;cursor:pointer}#snpal button.on{outline:3px solid #888}
 #guide h3{font-size:14px;margin:12px 0 2px}.gd{display:grid;grid-template-columns:72px 1fr;gap:6px 10px;align-items:center;margin:6px 0 10px}.gd .b{font:600 14px ui-monospace,Menlo,monospace;padding:6px 4px}.gd span{font-size:13px}
+
+.stp{border:1px solid var(--bd);border-radius:12px;padding:10px;margin:8px 0;background:var(--bg)}
+.sth{display:flex;align-items:center;justify-content:space-between;gap:8px}.sth b{font-size:14px}.sth .b{padding:4px 12px}
+.sg{margin-top:8px;padding-left:9px;border-left:3px solid var(--bd)}.sg.extra{border-left-color:#e08a2e}.sg.f2l,.sg.oll,.sg.pll,.sg.cross{border-left-color:var(--ac)}
+.sg .tag{font-size:13px;font-weight:600}.sg .mvs{font:600 15px/1.55 ui-monospace,Menlo,monospace;word-break:break-word;margin:2px 0}.sg .sit{font-size:12.5px;color:var(--mu);line-height:1.4}.sg .sit code{font:12.5px ui-monospace,Menlo,monospace;color:var(--fg)}
+#solsum{font-size:13px;margin:10px 0 2px;color:var(--mu)}#solv .row .p{font-weight:600}
 #chips span{cursor:pointer}#sheet{display:none}
 @media print{body{background:#fff}main,#guide,#solv{display:none}#sheet{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact}#sheet .sh{break-inside:avoid;border:1px solid #999;border-radius:8px;padding:6px;display:flex;gap:8px;align-items:center;color:#000;font:12px system-ui}#sheet .sh span:not(.th){font:11px ui-monospace,monospace}}

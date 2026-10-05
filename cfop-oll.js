@@ -52,7 +52,7 @@ const LIB_OLL=[
   "OLL 49|r U' r2 U r2 U r2 U' r",
   "OLL 50|r' U r2 U' r2 U' r2 U r'",
   "OLL 51|F U R U' R' U R U' R' F'",
-  "OLL 52|R U R' U R d' R U' R' F'",
+  "OLL 52|R U R' U R U' B U' B' R'",
   "OLL 53|r' U' R U' R' U R U' R' U2 r",
   "OLL 54|r U R' U R U' R' U R U2 r'",
   "OLL 55|R U2 R2 U' R U' R' U2 F R F'",
