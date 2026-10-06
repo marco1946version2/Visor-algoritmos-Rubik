@@ -29,6 +29,7 @@ js/
     resolver.js         cubo desplegado, validación, mezcla
     solucion.js         botón Resolver, lista de pasos, reproducir y copiar
     guia.js             guía de movimientos
+    pestanas.js         pestañas principales y botón flotante de la guía
   storage.js          estado guardado en el navegador
   app.js              arranque
 ```
@@ -39,4 +40,8 @@ Abre el archivo de `data/` de su categoría y agrega una línea con el formato `
 
 ## Orden de carga
 
-Los `<script>` de `index.html` están en un orden que importa: `data/`, luego `core/`, `ui/`, `methods/` y al final `app.js`. No lo cambies.
+Los `<script>` de `index.html` están en un orden que importa: `data/`, luego `core/`, `ui/` (con `pestanas.js` al final), `methods/` y al final `app.js`. No lo cambies.
+
+## Si se ve sin estilos
+
+`index.html` necesita `css/style.css` y las carpetas `js/` y `data/` junto a él, con esos nombres exactos. Si solo subes o abres `index.html`, se ve como texto plano.
