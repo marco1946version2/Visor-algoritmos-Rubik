@@ -1,47 +1,12 @@
 # Visor de algoritmos Rubik
 
-Abre `index.html` con doble clic. Funciona sin internet.
+Abre `index.html` con doble clic. Funciona sin internet. Todos los archivos están en una sola carpeta.
 
-## Estructura
+- `index.html` la página, `style.css` el diseño
+- `cfop-pll.js`, `cfop-oll.js`, `cfop-f2l.js`, `basicos.js`: los algoritmos (una línea por caso: `"Nombre|movimientos"`); `library.js` los junta
+- `cubo-base.js`, `visor3d.js`, `parser.js`, `reproductor.js`: el motor del cubo
+- `cfop.js`: el solver CFOP (cruz calculada; F2L, OLL y PLL con el catálogo)
+- `catalogo.js`, `mis-casos.js`, `identificar.js`, `resolver.js`, `solucion.js`, `teclado.js`, `extras.js`, `miniaturas.js`, `vista3d.js`, `guia.js`, `pestanas.js`: las pantallas
+- `storage.js` guarda tus datos; `app.js` arranca
 
-```
-index.html            la página (solo estructura)
-css/style.css         todo el diseño
-data/                 los algoritmos, uno por categoría
-  cfop-pll.js  cfop-oll.js  cfop-f2l.js  basicos.js
-  library.js          junta las listas (define el orden de las pestañas)
-js/
-  core/               lo que sirve para cualquier método
-    cubo-base.js        constantes, colores, matemática y tabla de movimientos
-    visor3d.js          el cubo 3D, paleta y plantillas
-    parser.js           texto de algoritmo -> lista de movimientos
-    reproductor.js      animar, avanzar, retroceder, invertir, espejo
-  methods/            un archivo por método de resolución
-    cfop.js             cruz calculada; F2L, OLL y PLL con el catálogo
-  ui/                 una pieza por función de pantalla
-    vista3d.js          girar la vista y pintar stickers
-    miniaturas.js       dibujos pequeños de cada caso
-    catalogo.js         lista, pestañas, búsqueda, favoritos, aprendidos
-    mis-casos.js        guardar, variantes, categorías, importar/exportar
-    teclado.js          teclado en pantalla
-    extras.js           atajos, tema, exportar archivo, imprimir
-    identificar.js      «¿Qué caso es?» para F2L, OLL y PLL
-    resolver.js         cubo desplegado, validación, mezcla
-    solucion.js         botón Resolver, lista de pasos, reproducir y copiar
-    guia.js             guía de movimientos
-    pestanas.js         pestañas principales y botón flotante de la guía
-  storage.js          estado guardado en el navegador
-  app.js              arranque
-```
-
-## Añadir un algoritmo
-
-Abre el archivo de `data/` de su categoría y agrega una línea con el formato `"Nombre|movimientos"`. El solver usa ese mismo catálogo para F2L, OLL y PLL.
-
-## Orden de carga
-
-Los `<script>` de `index.html` están en un orden que importa: `data/`, luego `core/`, `ui/` (con `pestanas.js` al final), `methods/` y al final `app.js`. No lo cambies.
-
-## Si se ve sin estilos
-
-`index.html` necesita `css/style.css` y las carpetas `js/` y `data/` junto a él, con esos nombres exactos. Si solo subes o abres `index.html`, se ve como texto plano.
+El orden de los `<script>` en `index.html` importa. No lo cambies.
