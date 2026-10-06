@@ -29,7 +29,7 @@ SV.simp=toks=>{const o=[];for(const w of toks){const f=w[0],q=w.slice(1),a=q.inc
  return o.map(([f,a])=>f+(a==1?'':a==2?'2':"'"))};
 const pw=(m,k)=>Array(k).fill(m);
 const UP=['','U','U2',"U'"]; // k vueltas de U
-const SLOTS=[{c:[1,1,1],e:[1,0,1],cols:['G','O'],nm:'frente-derecha'},{c:[-1,1,1],e:[-1,0,1],cols:['G','R'],nm:'frente-izquierda'},{c:[-1,1,-1],e:[-1,0,-1],cols:['B','R'],nm:'atrás-izquierda'},{c:[1,1,-1],e:[1,0,-1],cols:['B','O'],nm:'atrás-derecha'}];
+const SLOTS=[{c:[1,1,1],e:[1,0,1],cols:['G','O'],nm:'frente-derecha'},{c:[-1,1,1],e:[-1,0,1],cols:['G','R'],nm:'frente-izquierda'},{c:[-1,1,-1],e:[-1,0,-1],cols:['B','R'],nm:'atrás-izquierda'},{c:[1,1,-1],e:[1,0,-1],cols:['B','O'],nm:'atrás-derecha'}];SV.SLOTS=SLOTS;
 const DEDG=[[0,1,1],[0,1,-1],[-1,1,0],[1,1,0]];
 const colsAt=(st,pos)=>SV.slotsAt[pos].map(i=>st[i]);
 SV.find=(st,cols)=>{const k=[...cols].sort().join('');for(const pos in SV.slotsAt){const s=SV.slotsAt[pos];if(s.length==cols.length&&s.map(i=>st[i]).sort().join('')==k)return pos}return null};
@@ -75,7 +75,7 @@ SV.planPair=(st0,j)=>{let st=st0;const segs=[];
   const s=situ(st,j);
   const lift=jj=>{const m=SV.mapSlot(['R','U',"R'"],jj);return m};
   if(s.corner=='dother'||s.edge=='mother'){const jj=s.corner=='dother'?s.cj:s.ej;
-   const m=lift(jj);segs.push({k:'extra',sit:`${TXC[s.corner]}, ${TXE[s.edge]}`,txt:`Sacar lo que estaba mal metido en el hueco ${SLOTS[jj].nm} con un sexy move incompleto`,m});st=SV.apply(st,m);continue}
+   const m=lift(jj);segs.push({k:'extra',sit:`${TXC[s.corner]}, ${TXE[s.edge]}`,txt:`Sacar lo que estaba mal metido en el hueco ${SLOTS[jj].nm} con un sexy move incompleto`,m,j:jj});st=SV.apply(st,m);continue}
   // caso F2L: probar AUF previo (0..3) + algoritmo del catálogo
   let best=null;
   for(const c of F2L){const am=SV.mapSlot(c.t,j);for(let k=0;k<4;k++){const mv=SV.simp([...pw('U',0),...SV.mapSlot(UP[k]?[UP[k]]:[],j),...am]);
@@ -83,7 +83,7 @@ SV.planPair=(st0,j)=>{let st=st0;const segs=[];
    let ok=true;for(let q=0;q<4;q++)if(q!=j&&pairOK(st,q)&&!pairOK(r,q)){ok=false;break}if(!ok)continue;
    if(!best||mv.length<best.mv.length)best={c,k,mv,am}}}
   if(!best){// último recurso: sacar con sexy incompleto del propio hueco
-   const m=lift(j);segs.push({k:'extra',sit:`${TXC[s.corner]}, ${TXE[s.edge]}`,txt:'No encajó en ningún caso: saco el par con un sexy move incompleto y vuelvo a mirar',m});st=SV.apply(st,m);continue}
+   const m=lift(j);segs.push({k:'extra',sit:`${TXC[s.corner]}, ${TXE[s.edge]}`,txt:'No encajó en ningún caso: saco el par con un sexy move incompleto y vuelvo a mirar',m,j});st=SV.apply(st,m);continue}
   segs.push({k:'f2l',sit:`${TXC[s.corner]}, ${TXE[s.edge]}`,case:best.c.n,alg:best.c.a,auf:UP[best.k],m:best.mv});st=SV.apply(st,best.mv);}
  return null};
 // ---------- OLL / PLL ----------
@@ -102,7 +102,7 @@ SV.pll=st=>{const posts=[[],['U'],['U2'],["U'"]];
 // ---------- resolver todo ----------
 SV.solve=colors=>{ // colors: array de 54 letras en el orden SV.slots
  let st=colors.slice();const steps=[];
- const push=(t,segs)=>steps.push({t,segs});
+ const push=(t,segs,j)=>steps.push({t,segs,j});
  if(isSolved(st))return{steps,all:[]};
  // cruz
  if(!crossOK(st)){const m=SV.cross(st);if(m.length){push('Cruz blanca',[{k:'cross',txt:'Cruz blanca en la cara de abajo (búsqueda óptima)',m}]);st=SV.apply(st,m)}}
@@ -114,7 +114,7 @@ SV.solve=colors=>{ // colors: array de 54 letras en el orden SV.slots
   for(let j=0;j<4;j++){if(done.has(j))continue;const p=SV.planPair(st,j);if(!p)continue;const len=p.segs.reduce((a,s)=>a+s.m.length,0);
    const pen=p.segs.some(s=>s.k=='extra')?3:0;if(!best||len+pen<best.len+best.pen)best={j,p,len,pen}}
   if(!best)return{error:'No pude resolver un par F2L.'};
-  push(`F2L · par ${++fi} · ${nms(best.j)}`,best.p.segs.map(s=>({...s,pair:nms(best.j),slot:SLOTS[best.j].nm})));
+  push(`F2L · par ${++fi} · ${nms(best.j)}`,best.p.segs.map(s=>({...s,pair:nms(best.j),slot:SLOTS[best.j].nm})),best.j);
   st=best.p.st;done.add(best.j);[0,1,2,3].forEach(q=>{if(pairOK(st,q))done.add(q)})}
  if(!crossOK(st)||![0,1,2,3].every(j=>pairOK(st,j)))return{error:'Falló el F2L.'};
  // OLL

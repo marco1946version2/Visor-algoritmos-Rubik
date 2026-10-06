@@ -70,3 +70,10 @@ button.b{border-radius:10px;transition:transform .08s,border-color .15s}button.b
 @media print{.mainnav,#gbtn,#guide{display:none!important}}
 .workspace-right{scroll-margin-top:64px}
 @media(max-width:560px){.mainnav{gap:4px}.mainnav .b{flex:1 1 auto;padding:8px 6px;font-size:12px}}
+
+/* --- fase 4: resaltado y rótulo durante la solución --- */
+.cb.dim .s{filter:brightness(.34) saturate(.55)}
+.cb.ctx .s{filter:brightness(.62)}
+.cb.hl .s{box-shadow:0 0 0 2px #fff,0 0 14px 3px #ffffffb0}
+#cap{position:absolute;left:10px;top:10px;z-index:2;max-width:calc(100% - 110px);pointer-events:none;font:600 13px system-ui,sans-serif;padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--card) 82%,transparent);border:1px solid var(--bd)}
+#cap:empty{display:none}

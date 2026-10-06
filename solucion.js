@@ -22,7 +22,26 @@ $('nsolve').onclick=()=>{const o=validar();$('solres').innerHTML='';$('solsum').
  if(!r.all.length){$('vmsg').textContent='✔ Ese cubo ya está resuelto.';return}
  SOLV=r;$('vmsg').textContent='✔ Cubo válido. Solución abajo; toca ▶ en un paso para verlo en el cubo 3D.';renderSol(r);$('nshow').hidden=$('ncopy').hidden=false;$('solsum').scrollIntoView({behavior:'smooth',block:'center'})};
 async function showSol(){if(!SOLV)return false;await $('n3d').onclick();$('alg').value=SOLV.all.join(' ');cur=null;load();render();return true}
-async function playRange(a,b){if(!await showSol())return;await seek(a);playing=true;$('pb').textContent='⏸';while(playing&&idx<b&&await go(1));playing=false;$('pb').textContent='▶'}
+// --- cámara automática y resaltado de lo que se arma (cruz y F2L) ---
+const RYJ=[-35,35,145,215],sleep=ms=>new Promise(r=>setTimeout(r,ms));
+// Las piezas se reconocen por sus colores (no por su posición): así el resaltado sigue a la pieza mientras se mueve.
+const cols=c=>Object.values(c.st).map(s=>s.dataset.c),key=c=>cols(c).sort().join(''),isCrossC=c=>{const k=cols(c);return k.length==2&&k.includes('W')};
+const pairKeys=j=>{const q=SV.SLOTS[j].cols;return[['W',...q].sort().join(''),[...q].sort().join('')]};
+function setHL(on,step){cubies.forEach(c=>c.el.classList.remove('dim','ctx','hl'));
+ if(!on||!step||(step.t[0]!='C'&&step.t[0]!='F'))return;
+ const cross=step.t[0]=='C',mine=cross?[]:pairKeys(step.j),done=cross?[]:SOLV.steps.filter(s=>s.j!=null&&s.start<step.start).flatMap(s=>pairKeys(s.j));
+ cubies.forEach(c=>c.el.classList.add((cross?isCrossC(c):mine.includes(key(c)))?'hl':(isCrossC(c)||done.includes(key(c)))?'ctx':'dim'))}
+async function focus(step,seg){const ph=step.t[0];
+ setHL($('autohl').checked,step);
+ $('cap').textContent=step.t+(seg.k=='extra'?' · extra: sexy move incompleto':seg.case?' · '+seg.case:'');
+ if(!$('autocam').checked)return;
+ let tx=-25,ty=-35;if(ph=='C')tx=40;else if(ph=='F'){ty=RYJ[seg.j!=null?seg.j:step.j];tx=-20}else tx=-50;
+ const d=((ty-ry+540)%360)-180;scene.style.transition='transform .7s ease';ry+=d;rx=tx;view();await sleep(760);scene.style.transition=''}
+let runId=0;
+async function playRange(a,b){const my=++runId;if(!await showSol())return;if(my!=runId)return;const FMAP=[];SOLV.steps.forEach(s=>s.segs.forEach(g=>{for(let i=g.s;i<g.e;i++)FMAP[i]={step:s,seg:g}}));
+ await seek(a);if(my!=runId)return;playing=true;$('pb').textContent='⏸';let last=null;
+ while(playing&&my==runId&&idx<b){const f=FMAP[idx];if(f&&f.seg!==last){last=f.seg;await focus(f.step,f.seg);if(!playing||my!=runId)break}if(!await go(1))break}
+ if(my!=runId)return;playing=false;$('pb').textContent='▶';setHL(false);$('cap').textContent=''}
 $('nshow').onclick=()=>playRange(0,SOLV?SOLV.all.length:0);
 $('solres').onclick=e=>{const b=e.target.closest('[data-sp]');if(!b||!SOLV)return;const s=SOLV.steps[+b.dataset.sp];playRange(s.start,s.end)};
 $('ncopy').onclick=async()=>{if(!SOLV)return;const t=SOLV.steps.map((s,i)=>`${i+1}. ${s.t}\n`+s.segs.filter(g=>g.m.length).map(g=>'   '+(g.case?g.case+': ':g.k=='extra'?'Extra: ':'')+g.m.join(' ')).join('\n')).join('\n')+`\n\nTotal: ${SOLV.all.length} movimientos\n${SOLV.all.join(' ')}`;

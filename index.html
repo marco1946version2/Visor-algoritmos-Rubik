@@ -14,7 +14,7 @@
 
 <div class="workspace">
   <div class="workspace-left">
-        <div class="card" id="stage"><div id="scene"></div><button class="b" id="tl" type="button" aria-pressed="false" title="Actívalo para inclinar el cubo con el dedo; desactívalo para desplazar la página">↕ Inclinar</button></div>
+        <div class="card" id="stage"><div id="scene"></div><div id="cap"></div><button class="b" id="tl" type="button" aria-pressed="false" title="Actívalo para inclinar el cubo con el dedo; desactívalo para desplazar la página">↕ Inclinar</button></div>
     <div class="card" id="visor">
             <div class="section-head"><label>Algoritmo actual</label><span class="move-count" id="mc">0 movimientos</span></div>
             <div class="casehead"><span class="th big" id="bigth"></span><div style="min-width:0;flex:1"><div class="case-name" id="caseName">Algoritmo personalizado</div><div class="row" id="vrow"></div></div></div>
@@ -93,6 +93,7 @@
 <div class="row" style="margin-top:8px"><input type="text" id="nscr" placeholder="O escribe una mezcla (solo R L U D F B), ej. R U F' D2" style="flex:1" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="b" id="nscrb">Aplicar mezcla</button></div>
 <div id="vmsg" class="hint" style="margin-top:8px"></div>
 <div class="row" style="margin-top:10px"><button class="b p" id="nsolve">🧠 Resolver (cruz → F2L → OLL → PLL)</button><button class="b" id="nshow" hidden>▶ Ver todo en el cubo 3D</button><button class="b" id="ncopy" hidden>📋 Copiar</button></div>
+<div class="row" style="margin-top:6px"><label style="margin:0"><input type="checkbox" id="autocam" checked> 🎥 Cámara automática</label><label style="margin:0"><input type="checkbox" id="autohl" checked> 🔆 Resaltar lo que se arma</label></div>
 <div id="solsum"></div><div id="solres"></div></div>
     </section>
   </div>
