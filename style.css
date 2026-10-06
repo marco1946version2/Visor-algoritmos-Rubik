@@ -77,3 +77,20 @@ button.b{border-radius:10px;transition:transform .08s,border-color .15s}button.b
 .cb.hl .s{box-shadow:0 0 0 2px #fff,0 0 14px 3px #ffffffb0}
 #cap{position:absolute;left:10px;top:10px;z-index:2;max-width:calc(100% - 110px);pointer-events:none;font:600 13px system-ui,sans-serif;padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--card) 82%,transparent);border:1px solid var(--bd)}
 #cap:empty{display:none}
+
+/* --- celular: más compacto, el contenido de la pestaña llega antes --- */
+@media(max-width:900px){p.sub{display:none}h1{font-size:18px;margin:2px 0 6px}.mainnav{margin-bottom:8px}}
+@media(max-width:560px){
+ #stage{height:250px}
+ #scene{scale:.8}
+ .th.big svg{width:58px;height:58px}
+ .casehead{margin-bottom:2px;gap:10px}
+ .case-name{font-size:15px;margin-bottom:2px}
+ #vrow{margin-top:2px}
+ #vrow .b{padding:3px 9px;font-size:12px}
+ #chips{max-height:64px;overflow:auto;margin-top:4px;font-size:13px}
+ .playbar{padding-top:6px;margin-top:6px}
+ #visor .row .b{padding:6px 10px;font-size:13px}
+ #visor{padding-bottom:8px}
+}
+.mainnav{clear:both}
