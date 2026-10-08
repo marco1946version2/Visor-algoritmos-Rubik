@@ -100,3 +100,9 @@ button.b{border-radius:10px;transition:transform .08s,border-color .15s}button.b
 #pintar summary{cursor:pointer;font-weight:700;font-size:14px}
 #pintar[open] summary{margin-bottom:10px}
 #pintar .row .b{padding:6px 11px;font-size:13px}
+
+/* --- movimiento actual en azul --- */
+#kp button.kon{background:var(--ac);color:#fff;border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 35%,transparent)}
+.sg .mvs .mv{padding:1px 4px;border-radius:5px;transition:background .12s,opacity .12s}
+.sg .mvs .mv.now{background:var(--ac);color:#fff}
+.sg .mvs .mv.dn{opacity:.4}

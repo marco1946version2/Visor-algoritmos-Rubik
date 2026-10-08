@@ -2,7 +2,7 @@
 // --- resolvedor: botón, pasos y reproducción ---
 let SOLV=null;
 const netColors=()=>SV.slots.map(s=>NS.find(c=>c.pos+''==s.p+''&&c.n+''==s.n+'').k);
-function segHtml(g){const mv=g.m.length?`<div class="mvs">${esc(g.m.join(' '))}</div>`:'';let t='',s='';
+function segHtml(g){const mv=g.m.length?`<div class="mvs">${g.m.map((x,i)=>`<span class="mv" data-i="${g.s+i}">${esc(x)}</span>`).join(' ')}</div>`:'';let t='',s='';
  if(g.k=='cross'){t='Cruz blanca (abajo)';s=`Calculada: busca la cruz más corta (${g.m.length} movimientos).`}
  else if(g.k=='extra'){t='⚠ Extra · sexy move incompleto';s=`Vi: ${esc(g.sit)}.<br>${esc(g.txt)}. Es el <code>R U R'</code> de siempre (sexy move sin su último U'), con las letras giradas a ese hueco.`}
  else if(g.k=='f2l'){t='Caso '+g.case;s=`Vi: ${esc(g.sit)}.<br>Algoritmo del catálogo: <code>${esc(g.alg)}</code>`+(g.auf?`<br>Ajuste previo de U: <code>${g.auf}</code>`:'')+(g.slot&&g.slot!='frente-derecha'?`<br>Hueco ${esc(g.slot)}: las letras van giradas respecto al catálogo (que está escrito para frente-derecha).`:'')}

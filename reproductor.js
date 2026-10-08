@@ -2,7 +2,7 @@
 function parse(){const e=expand($('alg').value);
  $('err').textContent=e.bad?`No entiendo "${e.bad}"`:'';
  return e.bad?[]:e.moves.map(w=>{const q=w.slice(1);return{k:w[0],a:q.includes('2')?180:90,s:q=="'"?-1:1,t:w}})}
-function mark(){$('chips').innerHTML=mv.map((m,i)=>`<span class="${i<idx?'d':''}${i==idx?' c':''}">${m.t}</span>`).join('')}
+function mark(){if(window.onMove)onMove(null);$('chips').innerHTML=mv.map((m,i)=>`<span class="${i<idx?'d':''}${i==idx?' c':''}">${m.t}</span>`).join('')}
 function anim(m,sg){return new Promise(res=>{const [ax,ls,d]=MV[m.k],tot=d*m.a*m.s*sg;
  const cs=cubies.filter(c=>ls.includes(c.pos[ax])),t0=performance.now(),dur=+$('spd').value*(m.a>90?1.5:1);
  (function f(t){const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
@@ -10,7 +10,7 @@ function anim(m,sg){return new Promise(res=>{const [ax,ls,d]=MV[m.k],tot=d*m.a*m
   if(p<1)requestAnimationFrame(f);else{const R=rnd(rot(ax,tot));
    cs.forEach(c=>{c.M=rnd(mul(R,c.M));c.pos=rnd(mvp(R,c.pos));draw(c)});res()}})(t0)})}
 async function go(sg){if(busy||(sg>0&&idx>=mv.length)||(sg<0&&idx<=0))return false;
- busy=true;await anim(mv[sg>0?idx:idx-1],sg);idx+=sg;busy=false;mark();return true}
+ busy=true;const gi=sg>0?idx:idx-1;if(window.onMove)onMove(mv[gi],gi);await anim(mv[gi],sg);idx+=sg;busy=false;mark();return true}
 async function reset(){playing=false;$('pb').textContent='▶';while(busy)await new Promise(r=>setTimeout(r,20));
  cubies.forEach(c=>{c.pos=[...c.h];c.M=I()});if($('cs').checked)for(let i=mv.length-1;i>=0;i--)inst(mv[i],-1);drawAll();idx=0;mark()}
 function inst(m,sg){const [ax,ls,d]=MV[m.k],R=rnd(rot(ax,d*m.a*m.s*sg));
