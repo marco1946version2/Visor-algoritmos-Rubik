@@ -15,7 +15,8 @@ const drawAll=()=>cubies.forEach(c=>draw(c));
 const CN={W:'Blanco',Y:'Amarillo',G:'Verde',B:'Azul',R:'Rojo',O:'Naranja',N:'Gris (sin definir)'};
 Object.keys(C).forEach(k=>{const b=document.createElement('button');b.style.background=C[k];b.title=CN[k];b.setAttribute('aria-label','Pincel '+CN[k]);b.setAttribute('aria-pressed',k==pc);
  if(k==pc)b.className='on';b.onclick=()=>{pc=k;[...$('pal').children].forEach(x=>{x.className='';x.setAttribute('aria-pressed','false')});b.className='on';b.setAttribute('aria-pressed','true')};$('pal').appendChild(b)});
-let lastPre='top';
+let lastPre='top',vistaFija=null;
 function preset(p){lastPre=p;cubies.forEach(c=>{for(const f in c.st){
- const hs=JSON.stringify(c.h),ok=p=='solved'||(p=='top'&&c.h[1]==-1)||(p=='f2l'&&c.h[1]>=0)||(p=='par'&&(hs=='[1,1,1]'||hs=='[1,0,1]'));c.st[f].style.background=C[c.st[f].dataset.c=ok?SOL[f]:'N']}})}
-document.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{preset(b.dataset.pre);reset();render()});
+ const hs=JSON.stringify(c.h),ok=p=='solved'||(p=='top'&&c.h[1]==-1)||(p=='f2l'&&c.h[1]>=0)||(p=='par'&&(hs=='[1,1,1]'||hs=='[1,0,1]'))||(p=='oll'&&c.h[1]==-1&&f=='U');c.st[f].style.background=C[c.st[f].dataset.c=ok?SOL[f]:'N']}});
+ document.querySelectorAll('[data-pre]').forEach(b=>b.classList.toggle('on',vistaFija?b.dataset.pre==p:b.dataset.pre=='auto'))}
+document.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{const p=b.dataset.pre;vistaFija=p=='auto'?null:p;preset(p=='auto'?(cur?viewOf(cur):'top'):p);reset();render()});
