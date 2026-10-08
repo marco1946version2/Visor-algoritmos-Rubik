@@ -12,3 +12,10 @@ $('kp').onclick=e=>{const b=e.target.closest('button');if(!b)return;let t=rawTok
   else if(a=='d'&&last==')')t.push('2');
   else if(MOVE.test(last)){const k=last[0],q=last.slice(1);t[l]=a=='p'?k+(q=="'"?'':q?q:"'"):k+(q=='2'?'':'2')}}
  $('alg').value=t.join(' ').replace(/\( /g,'(').replace(/ \)/g,')').replace(/\) (\d)/g,')$1');load();render()};
+
+// En celular el cuadro empieza bloqueado (se usa el teclado en pantalla). Al tocarlo se abre el teclado del teléfono;
+// al tocar otra cosa (por ejemplo una tecla de la app) vuelve a bloquearse.
+if(coarse){const a=$('alg');
+ a.addEventListener('click',()=>{if(a.readOnly){a.readOnly=false;a.inputMode='text';a.focus()}});
+ a.addEventListener('blur',()=>{a.readOnly=true;a.inputMode='none'});
+ $('kbhint').hidden=false}

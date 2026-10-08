@@ -94,3 +94,9 @@ button.b{border-radius:10px;transition:transform .08s,border-color .15s}button.b
  #visor{padding-bottom:8px}
 }
 .mainnav{clear:both}
+
+/* --- panel «Qué mostrar y pintar» --- */
+#pintar{padding:12px 16px}
+#pintar summary{cursor:pointer;font-weight:700;font-size:14px}
+#pintar[open] summary{margin-bottom:10px}
+#pintar .row .b{padding:6px 11px;font-size:13px}

@@ -20,7 +20,7 @@ function render(){const q=$('q').value.toLowerCase(),A=all(),inTab=x=>tab=='Mío
  const V=cur?vars(cur):[];if(vi>=V.length)vi=0;
  $('vrow').innerHTML=cur?'<span class="hint">Variantes</span>'+V.map((_,i)=>`<button class="b${i==vi?' on':''}" data-v="${i}">${i+1}</button>`).join('')+'<button class="b" data-a="add" title="Guarda el algoritmo actual como otra variante de este caso">＋ variante</button>'+(vi>0?'<button class="b" data-a="rm">🗑 variante</button>':''):'';
  $('bigth').innerHTML=thumb($('alg').value,lastPre,!!cur&&/oll/i.test(cur.s))}
-function pick(x){cur=x;vi=0;dq=0;$('alg').value=x.a;$('nm').value=x.n;preset(vistaFija||viewOf(x));load();render()}
+function pick(x){cur=x;vi=0;dq=0;$('alg').value=x.a;$('nm').value=x.n;preset(viewOf(x));load();render()}
 $('lst').onclick=e=>{const b=e.target.closest('[data-i]');if(b)pick(lst[b.dataset.i])};
 $('tabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tab=b.dataset.t;cdq=0;render()}};
 $('q').oninput=render;

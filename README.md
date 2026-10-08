@@ -7,6 +7,7 @@ Herramienta web para estudiar y practicar algoritmos del cubo de Rubik 3x3 con e
 - **Visor 3D** del cubo con animación paso a paso, control de velocidad, retroceso y reinicio. La vista se gira arrastrando.
 - **Catálogo** con 123 algoritmos: 21 PLL, 57 OLL, 41 F2L y movimientos básicos. Incluye búsqueda, filtros, orden por longitud, favoritos y marca de aprendidos.
 - **Mis casos:** escritura de algoritmos propios (admite paréntesis y repeticiones, como `(R U R' U')3`), teclado en pantalla, categorías, importación de listas y exportación de datos.
+- **Qué mostrar y pintar:** plantillas para ver solo las piezas de interés (capa superior, cara de arriba, dos capas, el par, la cruz, solo aristas, solo esquinas), pincel de colores y modo pieza completa para elegir a mano qué piezas se muestran.
 - **Identificar:** reconoce un caso F2L, OLL o PLL a partir de los stickers pintados en el cubo.
 - **Resolver:** valida un cubo pintado en el cubo desplegado (o genera una mezcla) y calcula su solución completa:
   - Cruz blanca calculada por búsqueda, con la solución más corta.
